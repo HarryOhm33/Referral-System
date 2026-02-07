@@ -10,6 +10,7 @@ __pycache__/
 jwt-env/
 env/
 venv/
+env1/
 
 # IDE/editor folders
 .vscode/
