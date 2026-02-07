@@ -22,7 +22,7 @@ def generate_referral(request):
 
     referral = generate_referral_for_user(user)
 
-    return Response(referral_to_dict(referral))
+    return Response(referral_to_dict(referral), status=status.HTTP_201_CREATED)
 
 
 @api_view(["POST"])
@@ -37,7 +37,8 @@ def apply_referral(request):
             {
                 "message": "Referral applied successfully",
                 "referral_code": referral.referral_code,
-            }
+            },
+            status=status.HTTP_200_OK,
         )
 
     except ValueError as e:
@@ -48,25 +49,25 @@ def apply_referral(request):
 @authenticate
 def referral_summary(request):
     data = get_referral_summary(request.user)
-    return Response(data)
+    return Response(data, status=status.HTTP_200_OK)
 
 
 @api_view(["GET"])
 @authenticate
 def referral_list(request):
     data = get_referral_list(request.user)
-    return Response(data)
+    return Response(data, status=status.HTTP_200_OK)
 
 
 @api_view(["GET"])
 @authenticate
 def referral_timeline(request):
     data = get_referral_timeline(request.user)
-    return Response(data)
+    return Response(data, status=status.HTTP_200_OK)
 
 
 @api_view(["GET"])
 @authenticate
 def reward_history(request):
     data = get_reward_history(request.user)
-    return Response(data)
+    return Response(data, status=status.HTTP_200_OK)

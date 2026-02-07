@@ -14,7 +14,7 @@ from .services import get_top_referrers, credit_reward, create_reward_config
 def admin_top_referrers(request):
 
     data = get_top_referrers()
-    return Response(data)
+    return Response(data, status=status.HTTP_200_OK)
 
 
 @api_view(["POST"])
@@ -30,7 +30,8 @@ def admin_credit_reward(request, reward_id):
                 "message": "Reward credited successfully",
                 "reward_id": str(reward.id),
                 "status": reward.status,
-            }
+            },
+            status=status.HTTP_200_OK,
         )
 
     except ValueError as e:
@@ -55,7 +56,8 @@ def admin_create_reward_config(request):
                 "reward_value": config.reward_value,
                 "reward_unit": config.reward_unit,
                 "is_active": config.is_active,
-            }
+            },
+            status=status.HTTP_201_CREATED,
         )
 
     except ValueError as e:

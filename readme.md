@@ -1,125 +1,296 @@
-# Django JWT Auth API 🔐
+# Django Referral & Reward API 🎁
 
-This is a simple authentication system built using Django, MongoEngine, and JWT (JSON Web Tokens). It supports user registration with OTP email verification, login, session management, and logout functionality.
+This project is a backend system built using **Django**, **MongoEngine**, and JWT authentication.  
+It provides a complete infrastructure for:
+
+- User authentication with OTP verification
+- Referral code generation & application
+- Fraud-safe referral tracking
+- Reward configuration
+- Reward ledger management
+- User & admin analytics
+
+---
 
 ## 🚀 Features
 
+### Authentication
+
 - Signup with OTP email verification
 - Secure password hashing
-- JWT token authentication (7-day expiry)
-- Session tracking using MongoDB
-- Logout and session invalidation
-- Cookie & Header-based token handling
+- JWT token authentication
+- Session tracking
+- Logout & invalidation
+
+### Referral System
+
+- Unique referral code per user
+- Idempotent generation
+- Self-referral prevention
+- One-time usage enforcement
+
+### Reward System
+
+- Config-driven reward values
+- Automatic reward creation
+- Admin credit system
+- Full history tracking
+
+### Analytics
+
+- Referral summary
+- Referral usage list
+- Daily timeline
+- Admin leaderboard
+
+---
 
 ## 🛠️ Tech Stack
 
 - Python & Django
-- MongoDB (with MongoEngine)
+- MongoDB (MongoEngine)
 - JWT (PyJWT)
-- `python-decouple` for `.env` config
-- REST API with Django REST Framework
+- Django REST Framework
+- `python-decouple` for `.env`
+
+---
 
 ## 🗂️ Project Structure
 
 ```
-
-Jwt-Auth/
-├── core/ # Django project folder
-│ ├── main_project/ # Contains `urls.py`, `settings.py`, etc.
-│ ├── user_auth/ # App with auth logic
-│ └── env/ # .env file for secret keys
-├── jwtenv/ # Virtual environment (should be in .gitignore)
+project-root/
+├── core/
+│   ├── main_project/
+│   ├── user_auth/
+│   ├── referrals/        # referral & reward system
+│   └── env/              # environment variables
+│
+├── venv/
 ├── requirements.txt
-├── .env
 ├── .gitignore
 └── README.md
-
 ```
+
+---
 
 ## 🔐 Environment Variables
 
-Create a `.env` file inside `core/env/` with:
+Create `.env` inside:
 
 ```
+core/env/
+```
 
+### Example
+
+```
 EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
 EMAIL_HOST=smtp.gmail.com
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
-EMAIL_HOST_USER=your_otp_delivery_email
-EMAIL_HOST_PASSWORD=your_app_password
-MONGO_URI=your_mongo_uri
-JWT-SECRET=your_secret_key_here
+EMAIL_HOST_USER=your_email
+EMAIL_HOST_PASSWORD=your_password
 
+MONGO_URI=your_mongo_uri
+
+JWT_SECRET=supersecretkey
 ```
 
-Make sure it's **not committed** by including `env/` in your `.gitignore`.
+⚠️ Do NOT commit this file.
 
-## 🧪 API Endpoints
+---
 
-### Auth Routes
+# 🧪 API Endpoints
 
-- `POST /signup` — Register a new user (sends OTP)
-- `POST /verify-otp` — Verify OTP and activate user
-- `POST /login` — Authenticate and return JWT token (stored in cookie)
-- `POST /verify-session` — Validate active session and return user data
-- `POST /logout` — Delete session and clear token cookie
+---
 
-## 🧾 Setup Instructions
+## 🔑 Authentication
 
-### 1. Clone the repo
+- `POST /signup`
+- `POST /verify-otp`
+- `POST /login`
+- `POST /verify-session`
+- `POST /logout`
+
+---
+
+## 🎁 Referral APIs (User)
+
+### Generate code
+
+```
+POST /api/referral/generate
+```
+
+### Apply code
+
+```
+POST /api/referral/apply
+```
+
+### Referral Summary
+
+```
+GET /api/referral/analytics/summary
+```
+
+### Referral List
+
+```
+GET /api/referral/analytics/list
+```
+
+### Referral Timeline
+
+```
+GET /api/referral/analytics/timeline
+```
+
+---
+
+## 💰 Rewards (User)
+
+### Reward History
+
+```
+GET /api/rewards/history
+```
+
+---
+
+## 👑 Admin APIs
+
+### Create reward config
+
+```
+POST /api/admin/reward-config
+```
+
+### Credit reward
+
+```
+POST /api/admin/rewards/{reward_id}/credit
+```
+
+### Top referrers
+
+```
+GET /api/admin/referral/top
+```
+
+---
+
+# 🧾 Setup Instructions
+
+---
+
+## 1️⃣ Clone repository
 
 ```bash
 git clone https://github.com/HarryOhm33/Djano-JWT.git
-cd Django-JWT
+cd Djano-JWT
 ```
 
-### 2. Create virtual environment
+---
+
+## 2️⃣ Create virtual environment
 
 ```bash
-python -m venv jwtenv
-source jwtenv/bin/activate  # On Windows: jwtenv\Scripts\activate
+python -m venv venv
 ```
 
-### 3. Install dependencies
+### Activate
+
+Windows
+
+```bash
+venv\Scripts\activate
+```
+
+Mac / Linux
+
+```bash
+source venv/bin/activate
+```
+
+---
+
+## 3️⃣ Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Add your .env file as described above
+---
 
-### 5. Run the server
+## 4️⃣ Add `.env`
+
+As described above.
+
+---
+
+## 5️⃣ Make sure MongoDB is running
+
+Local:
+
+```bash
+mongod
+```
+
+Or Atlas URI.
+
+---
+
+## 6️⃣ Run server
 
 ```bash
 python manage.py runserver
 ```
 
-## 📦 Dependencies
+---
 
-Installed via `requirements.txt`:
+## 🌐 Server URL
 
-- `Django`
-- `djangorestframework`
-- `mongoengine`
-- `pyjwt`
-- `bcrypt`
-- `python-decouple`
-
-## ⚠️ Note
-
-- Make sure MongoDB is running locally or connect to a remote cluster.
-- Sessions (tokens) are auto-expired using MongoDB TTL index.
-- OTPs also expire in 5 minutes via TTL.
+```
+http://127.0.0.1:8000/
+```
 
 ---
 
-## 📄 License
+# 🔑 Authentication Requirement
 
-This project is open source and free to use.
+Most APIs require JWT.
+
+Use header:
+
+```
+Authorization: Bearer <token>
+```
 
 ---
 
-## 👨‍💻 Author
+# 🧱 First-Time Setup Requirement (IMPORTANT)
 
-Developed by [Hari Om](https://github.com/HarryOhm33)
+Create at least **one active reward config** before applying referrals.
+
+```
+POST /api/admin/reward-config
+```
+
+Otherwise apply will fail.
+
+---
+
+# ⚠️ Notes
+
+- Mongo handles TTL for sessions & OTPs
+- Reward values are stored in ledger for historical accuracy
+- Admin APIs are role protected
+- All analytics are aggregation-friendly
+
+---
+
+# 👨‍💻 Author
+
+Hari Om 🚀  
+Full Stack Developer

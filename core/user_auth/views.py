@@ -90,7 +90,8 @@ def verify_otp(request):
     Otp.objects(email=email).delete()  # Delete used OTP
 
     return Response(
-        {"valid": True, "message": "OTP verified successfully. You can now log in."}
+        {"valid": True, "message": "OTP verified successfully. You can now log in."},
+        status=status.HTTP_200_OK,
     )
 
 
@@ -165,7 +166,8 @@ def verify_session(request):
                 "is_verified": user.is_verified,
                 "created_at": user.created_at.isoformat(),
             },
-        }
+        },
+        status=status.HTTP_200_OK,
     )
 
 
