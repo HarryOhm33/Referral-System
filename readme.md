@@ -60,10 +60,11 @@ It provides a complete infrastructure for:
 ```
 project-root/
 ├── core/
-│   ├── main_project/
+│   ├── core/
 │   ├── user_auth/
-│   ├── referrals/        # referral & reward system
-│   └── env/              # environment variables
+│   ├── referrals/        # referral
+│   ├── admin_panel/      # reward system
+│   └── .env              # environment variables
 │
 ├── venv/
 ├── requirements.txt
@@ -78,7 +79,7 @@ project-root/
 Create `.env` inside:
 
 ```
-core/env/
+core/.env
 ```
 
 ### Example
@@ -153,7 +154,7 @@ GET /api/referral/analytics/timeline
 ### Reward History
 
 ```
-GET /api/rewards/history
+GET /api/referrals/rewards/history
 ```
 
 ---
@@ -261,13 +262,20 @@ http://127.0.0.1:8000/
 
 Most APIs require JWT.
 
-Use header:
+You can pass the token in header:
 
 ```
 Authorization: Bearer <token>
 ```
 
----
+### 🧪 Using Postman?
+
+If you logged in via the login API and the backend sets the token in cookies,  
+Postman will automatically send cookies with future requests.
+
+So in many cases **you may not need to manually add the Authorization header**.
+
+If authentication fails, then manually attach the Bearer token.
 
 # 🧱 First-Time Setup Requirement (IMPORTANT)
 
