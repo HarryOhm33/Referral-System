@@ -107,11 +107,21 @@ JWT_SECRET=supersecretkey
 
 ## 🔑 Authentication
 
-- `POST /signup`
-- `POST /verify-otp`
-- `POST /login`
-- `POST /verify-session`
-- `POST /logout`
+- `POST /signup/`
+- `POST /verify-otp/`
+- `POST /login/`
+- `POST /verify-session/`
+- `POST /logout/`
+
+---
+
+## Create Reward Config (Admin)
+
+### Create reward config
+
+```
+POST /api/admin/reward-config/
+```
 
 ---
 
@@ -120,31 +130,47 @@ JWT_SECRET=supersecretkey
 ### Generate code
 
 ```
-POST /api/referral/generate
+POST /api/referral/generate/
 ```
 
 ### Apply code
 
 ```
-POST /api/referral/apply
+POST /api/referral/apply/
 ```
 
 ### Referral Summary
 
 ```
-GET /api/referral/analytics/summary
+GET /api/referral/analytics/summary/
 ```
 
 ### Referral List
 
 ```
-GET /api/referral/analytics/list
+GET /api/referral/analytics/list/
 ```
 
 ### Referral Timeline
 
 ```
-GET /api/referral/analytics/timeline
+GET /api/referral/analytics/timeline/
+```
+
+---
+
+## 👑 Admin APIs
+
+### Top referrers
+
+```
+GET /api/admin/referral/top/
+```
+
+### Credit reward
+
+```
+POST /api/admin/rewards/{reward_id}/credit/
 ```
 
 ---
@@ -154,29 +180,7 @@ GET /api/referral/analytics/timeline
 ### Reward History
 
 ```
-GET /api/referrals/rewards/history
-```
-
----
-
-## 👑 Admin APIs
-
-### Create reward config
-
-```
-POST /api/admin/reward-config
-```
-
-### Credit reward
-
-```
-POST /api/admin/rewards/{reward_id}/credit
-```
-
-### Top referrers
-
-```
-GET /api/admin/referral/top
+GET /api/referrals/rewards/history/
 ```
 
 ---
