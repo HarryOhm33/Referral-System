@@ -14,6 +14,7 @@ class User(Document):
     email = EmailField(required=True, unique=True)
     password = StringField(required=True)
     is_verified = BooleanField(default=False)
+    isAdmin = BooleanField(default=False)
     created_at = DateTimeField(default=datetime.now)
 
     meta = {"collection": "users"}
